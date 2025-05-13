@@ -10,6 +10,7 @@ try {
     const preBody = core.getInput('pre-body');
     const postBody = core.getInput('post-body');
     const draft = core.getInput('draft') == "true" ? true : false;
+    const prerelease = core.getInput('prerelease') == "true" ? true : false;
     console.log(`Checking Milestone ${milestoneTitle}`);
 
     const octokit = github.getOctokit(token);
@@ -91,6 +92,7 @@ try {
                 tag_name: milestoneTitle,
                 name: milestoneTitle,
                 draft: draft,
+                prerelease: prerelease,
                 body: notes
             });
 
