@@ -7,6 +7,9 @@ try {
     const ghRepo = github.context.repo.repo;
     const milestoneTitle = core.getInput('milestone-title');
     const milestoneNext = core.getInput('milestone-next');
+    const preBody = core.getInput('pre-body');
+    const postBody = core.getInput('post-body');
+    const draft = core.getInput('draft') == "true" ? true : false;
     console.log(`Checking Milestone ${milestoneTitle}`);
 
     const octokit = github.getOctokit(token);
@@ -70,8 +73,14 @@ try {
 
         octokit.paginate(options).then(issues => {
             let notes = "";
+            if (preBody != "") {
+                preBody + "\n"
+            }
             for (const issue of issues) {
                 notes = notes + "- #" + issue.number + " " + issue.title + "\n";
+            }
+            if (postBody != "") {
+                notes += "\n" + postBody
             }
 
             console.log(`Generated change log:\n ${notes}`);
@@ -81,7 +90,7 @@ try {
                 repo: ghRepo,
                 tag_name: milestoneTitle,
                 name: milestoneTitle,
-                draft: false,
+                draft: draft,
                 body: notes
             });
 
