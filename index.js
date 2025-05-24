@@ -29,7 +29,7 @@ try {
             return;
         }
 
-        console.log(`Found Milestone ${milestone.title}`, milestone);
+        console.log(`Found Milestone ${milestone.title}`);
 
         if (milestone.open_issues > 0) {
             console.log(`Milestone ${milestone.title} still has ${milestone.open_issues} open issues!`);
@@ -68,7 +68,6 @@ try {
         const options = octokit.rest.issues.listForRepo.endpoint.merge({
             owner: ghOwner,
             repo: ghRepo,
-            milestone: milestone.id,
             state: 'closed'
         });
 
@@ -78,7 +77,9 @@ try {
                 preBody + "\n"
             }
             for (const issue of issues) {
-                console.log(issue)
+                if (issue.milestone.id != milestone.id) {
+                    continue
+                }
                 notes = notes + "- [#" + issue.number + " " + issue.title + "](/issues/" + issue.number + ")\n";
             }
             if (postBody != "") {
