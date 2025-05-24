@@ -80,7 +80,7 @@ try {
             
             for (const issue of issues) {
                 if (issue.milestone != null && issue.milestone.id == milestone.id) {
-                    notes += "- #" + issue.number + " " + issue.title + "n";
+                    notes += "- #" + issue.number + " " + issue.title + "\n";
                 }
             }
             
