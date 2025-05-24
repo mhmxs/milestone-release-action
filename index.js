@@ -79,7 +79,7 @@ try {
         console.log(preBody, postBody, milestone)
         octokit.paginate(options).then(issues => {
             for (const issue of issues) {
-                console.log(issue)
+                console.log(issue, issue.milestone)
                 if (issue.milestone == null || issue.milestone.id != milestone.id) {
                     continue;
                 }
