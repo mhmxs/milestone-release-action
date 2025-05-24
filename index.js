@@ -79,13 +79,14 @@ try {
 
         octokit.paginate(options).then(issues => {
             for (const issue of issues) {
-                if (issue.milestone != null) {
+                if (issue.milestone != null && issue.milestone.id == milestone.id) {
                     console.log(issue.milestone)
                     notes += "- #" + issue.number + " " + issue.title + "n";
                 }
             }
         });
 
+        console.log(notes)
         if (postBody != "") {
             notes += "\n" + postBody;
         }
