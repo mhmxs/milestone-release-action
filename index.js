@@ -43,7 +43,7 @@ try {
         octokit.rest.issues.updateMilestone({
             owner: ghOwner,
             repo: ghRepo,
-            milestone_number: milestone.number,
+            milestone_number: milestone.id,
             state: 'closed'
         });
 
@@ -68,7 +68,7 @@ try {
         const options = octokit.rest.issues.listForRepo.endpoint.merge({
             owner: ghOwner,
             repo: ghRepo,
-            milestone: milestone.number,
+            milestone: milestone.id,
             state: 'closed'
         });
 
