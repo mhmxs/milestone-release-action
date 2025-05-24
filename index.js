@@ -78,7 +78,8 @@ try {
                 preBody + "\n"
             }
             for (const issue of issues) {
-                notes = notes + "- [#" + issue.number + " " + issue.title + "](/" + ghOwner + "/" + ghRepo + "/issues/" + issue.number + ")\n";
+                console.log(issue)
+                notes = notes + "- [#" + issue.number + " " + issue.title + "](/issues/" + issue.number + ")\n";
             }
             if (postBody != "") {
                 notes += "\n" + postBody
