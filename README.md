@@ -27,10 +27,26 @@ Action itself. Use this if you want to pass in your own Personal Access Token.
 
 **Optional** The Milestone Title to create in the Repository.
 
+### `pre-body`
+
+**Optional** Body content above the changelog.
+
+### `post-body`
+
+**Optional** Body content below the changelog.
+
+### `draft`
+
+**Optional** Draft flag of the release.
+
+### `prerelease`
+
+**Optional** Pre-release flag of the release.
+
 ## Example usage
 
 ```yaml
-- uses: radcortez/milestone-release-action@main
+- uses: mhmxs/milestone-release-action@main
   name: milestone release
   with:
     github-token: ${{secrets.GITHUB_TOKEN}}
@@ -41,7 +57,7 @@ Most likely you want for the `milestone-title` to be dynamic. You could retrieve
 your context, by querying something in your project that provides you that information and then pass it as a variable:
 
 ```yaml
-- uses: radcortez/milestone-release-action@main
+- uses: mhmxs/milestone-release-action@main
   name: milestone release
   with:
     github-token: ${{secrets.GITHUB_TOKEN}}
