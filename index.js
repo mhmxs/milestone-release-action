@@ -78,9 +78,11 @@ try {
         }
 
         octokit.paginate(options).then(issues => {
-            console.log(issues)
             for (const issue of issues) {
-                notes += "- #" + issue.number + " " + issue.title + "n";
+                if (issue.milestone != null) {
+                    console.log(issue.milestone)
+                    notes += "- #" + issue.number + " " + issue.title + "n";
+                }
             }
         });
 
