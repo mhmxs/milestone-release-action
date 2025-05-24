@@ -68,6 +68,7 @@ try {
         const options = octokit.rest.issues.listForRepo.endpoint.merge({
             owner: ghOwner,
             repo: ghRepo,
+            milestone: milestone.id,
             state: 'closed'
         });
 
@@ -78,9 +79,7 @@ try {
 
         octokit.paginate(options).then(issues => {
             for (const issue of issues) {
-                if (issue.milestone != null && issue.milestone.id == milestone.id) {
-                    notes += "- [#" + issue.number + " " + issue.title + "](/issues/" + issue.number + ")\n";
-                }
+                notes += "- [#" + issue.number + " " + issue.title + "](/issues/" + issue.number + ")\n";
             }
         });
 
