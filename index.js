@@ -75,7 +75,8 @@ try {
         if (preBody != "") {
             preBody + "\n";
         }
-        
+
+        console.log(preBody, postBody, milestone)
         octokit.paginate(options).then(issues => {
             for (const issue of issues) {
                 console.log(issue)
