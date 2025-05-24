@@ -73,17 +73,14 @@ try {
 
         let notes = "";
         if (preBody != "") {
-            preBody + "\n";
+            notes += preBody + "\n";
         }
 
-        console.log(preBody, postBody, milestone)
         octokit.paginate(options).then(issues => {
             for (const issue of issues) {
-                console.log(issue, issue.milestone)
-                if (issue.milestone == null || issue.milestone.id != milestone.id) {
-                    continue;
+                if (issue.milestone != null && issue.milestone.id == milestone.id) {
+                    notes += "- [#" + issue.number + " " + issue.title + "](/issues/" + issue.number + ")\n";
                 }
-                notes = notes + "- [#" + issue.number + " " + issue.title + "](/issues/" + issue.number + ")\n";
             }
         });
 
