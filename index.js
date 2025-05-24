@@ -71,35 +71,37 @@ try {
             state: 'closed'
         });
 
+        let notes = "";
+        if (preBody != "") {
+            preBody + "\n";
+        }
+        
         octokit.paginate(options).then(issues => {
-            let notes = "";
-            if (preBody != "") {
-                preBody + "\n"
-            }
             for (const issue of issues) {
                 if (issue.milestone.id != milestone.id) {
-                    continue
+                    continue;
                 }
                 notes = notes + "- [#" + issue.number + " " + issue.title + "](/issues/" + issue.number + ")\n";
             }
-            if (postBody != "") {
-                notes += "\n" + postBody
-            }
-
-            console.log(`Generated change log:\n ${notes}`);
-
-            octokit.rest.repos.createRelease({
-                owner: ghOwner,
-                repo: ghRepo,
-                tag_name: milestoneTitle,
-                name: milestoneTitle,
-                draft: draft,
-                prerelease: prerelease,
-                body: notes
-            });
-
-            console.log(`Created Release ${milestone.title}`);
         });
+
+        if (postBody != "") {
+            notes += "\n" + postBody;
+        }
+
+        console.log(`Generated change log:\n ${notes}`);
+
+        octokit.rest.repos.createRelease({
+            owner: ghOwner,
+            repo: ghRepo,
+            tag_name: milestoneTitle,
+            name: milestoneTitle,
+            draft: draft,
+            prerelease: prerelease,
+            body: notes
+        });
+
+        console.log(`Created Release ${milestone.title}`);
 
     }).catch((error) => {
         console.debug(error);
