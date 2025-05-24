@@ -78,7 +78,7 @@ try {
         
         octokit.paginate(options).then(issues => {
             for (const issue of issues) {
-                if (issue.milestone.id != milestone.id) {
+                if (issue.milestone == null || issue.milestone.id != milestone.id) {
                     continue;
                 }
                 notes = notes + "- [#" + issue.number + " " + issue.title + "](/issues/" + issue.number + ")\n";
