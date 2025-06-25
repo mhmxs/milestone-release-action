@@ -120,14 +120,16 @@ try {
                         res.on('data', (chunk) => { data += chunk; });
                         res.on('end', () => {
                             if (res.statusCode >= 200 && res.statusCode < 300) {
-                                throw new Error('Asset uploaded:', data);
+                                console.log('Asset uploaded:', f);
                             } else {
-                                throw new Error('Upload failed:', res.statusCode, data);
+                                console.debug(res.statusCode, data);
+                                throw new Error('Upload failed');
                             }
                         });
                     });
                     req.on('error', (e) => {
-                        throw new Error('Request error:', e);
+                        console.debug(e);
+                        throw new Error('Request error');
                     });
                     req.write(fileData);
                     req.end();
