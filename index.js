@@ -105,7 +105,7 @@ try {
             }).then(({data}) => {
                 files.split(',').map(s => s.trim()).forEach(f => {
                     let fileData = fs.readFileSync(f)
-
+console.log(process.env)
                     let req = https.request({
                         hostname: process.env.GITHUB_REPOSITORY,
                         path: `/api/v1/repos/${ghOwner}/${ghRepo}/releases/${data.id}/assets?name=${encodeURIComponent(path.basename(f))}`,
@@ -120,14 +120,14 @@ try {
                         res.on('data', (chunk) => { data += chunk; });
                         res.on('end', () => {
                             if (res.statusCode >= 200 && res.statusCode < 300) {
-                                console.log('Asset uploaded:', data);
+                                throw new Error('Asset uploaded:', data);
                             } else {
-                                console.error('Upload failed:', res.statusCode, data);
+                                throw new Error('Upload failed:', res.statusCode, data);
                             }
                         });
                     });
                     req.on('error', (e) => {
-                        console.error('Request error:', e);
+                        throw new Error('Request error:', e);
                     });
                     req.write(fileData);
                     req.end();
