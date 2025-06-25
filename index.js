@@ -1,6 +1,8 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const fs = require("fs");
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 
 try {
     const token = core.getInput('github-token');
@@ -102,15 +104,33 @@ try {
                 body: notes
             }).then(({data}) => {
                 files.split(',').map(s => s.trim()).forEach(f => {
-                    octokit.rest.repos.uploadReleaseAsset({
-                        owner: ghOwner,
-                        repo: ghRepo,
-                        release_id: data.id,
-                        name: f,
-                        data: fs.readFileSync(f),
-                    });
+                    let fileData = fs.readFileSync(f)
 
-                    console.log(`File uploaded ${f}`);
+                    let req = https.request({
+                        hostname: process.env.GITHUB_REPOSITORY,
+                        path: `/api/v1/repos/${ghOwner}/${ghRepo}/releases/${data.id}/assets?name=${encodeURIComponent(path.basename(f))}`,
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/octet-stream',
+                            'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+                            'Content-Length': fileData.length,
+                        },
+                    }, (res) => {
+                        let data = '';
+                        res.on('data', (chunk) => { data += chunk; });
+                        res.on('end', () => {
+                            if (res.statusCode >= 200 && res.statusCode < 300) {
+                                console.log('Asset uploaded:', data);
+                            } else {
+                                console.error('Upload failed:', res.statusCode, data);
+                            }
+                        });
+                    });
+                    req.on('error', (e) => {
+                        console.error('Request error:', e);
+                    });
+                    req.write(fileData);
+                    req.end();
                 });
             });
     
