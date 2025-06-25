@@ -105,14 +105,14 @@ try {
             }).then(({data}) => {
                 files.split(',').map(s => s.trim()).forEach(f => {
                     let fileData = fs.readFileSync(f)
-console.log(process.env)
+
                     let req = https.request({
                         hostname: process.env.GITHUB_SERVER_URL.replace(/^https?:\/\//, ""),
                         path: `/api/v1/repos/${ghOwner}/${ghRepo}/releases/${data.id}/assets?name=${encodeURIComponent(path.basename(f))}`,
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/octet-stream',
-                            'Authorization': `token ${process.env.GITHUB_TOKEN || process.env.GITEA_TOKEN}`,
+                            'Authorization': `token ${process.env.ACTIONS_RUNTIME_TOKEN || process.env.GITHUB_TOKEN || process.env.GITEA_TOKEN}`,
                             'Content-Length': fileData.length,
                         },
                     }, (res) => {
