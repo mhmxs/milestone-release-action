@@ -11,6 +11,7 @@ try {
     const postBody = core.getInput('post-body');
     const draft = core.getInput('draft') == "true" ? true : false;
     const prerelease = core.getInput('prerelease') == "true" ? true : false;
+    const files = core.getInput('files');
     console.log(`Checking Milestone ${milestoneTitle}`);
 
     const octokit = github.getOctokit(token);
@@ -98,6 +99,18 @@ try {
                 draft: draft,
                 prerelease: prerelease,
                 body: notes
+            }).then(({data}) => {
+                files.split(',').map(s => s.trim()).forEach(f => {
+                    octokit.rest.repos.uploadReleaseAsset({
+                        owner: ghOwner,
+                        repo: ghRepo,
+                        release_id: data.id,
+                        name: f,
+                        data: fs.readFileSync(f),
+                    });
+
+                    console.log(`File uploaded ${f}`);
+                });
             });
     
             console.log(`Created Release ${milestone.title}`);

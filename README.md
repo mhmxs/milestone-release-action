@@ -43,6 +43,10 @@ Action itself. Use this if you want to pass in your own Personal Access Token.
 
 **Optional** Pre-release flag of the release.
 
+### `files`
+
+**Optional** Comma-separated list of release assets to upload.
+
 ## Example usage
 
 ```yaml

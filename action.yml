@@ -26,6 +26,9 @@ inputs:
   prerelease:
     description: 'Pre-release flag of the release'
     required: false
+  files:
+    description: 'Comma-separated list of release assets to upload'
+    required: false
     
 runs:
   using: 'node20'
