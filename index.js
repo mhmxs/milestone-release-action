@@ -104,6 +104,10 @@ try {
                 body: notes
             }).then(({data}) => {
                 files.split(',').map(s => s.trim()).forEach(f => {
+                    if (f == "") {
+                        return
+                    }
+                    
                     let fileData = fs.readFileSync(f)
 
                     let req = https.request({
