@@ -110,9 +110,11 @@ try {
                     
                     let fileData = fs.readFileSync(f)
 
+                    const uploadPathPrefix = process.env.GITHUB_SERVER_URL.includes("github.com") ? "" : "/api/v1"
+                    
                     let req = https.request({
                         hostname: process.env.GITHUB_SERVER_URL.replace(/^https?:\/\//, ""),
-                        path: `/api/v1/repos/${ghOwner}/${ghRepo}/releases/${data.id}/assets?name=${encodeURIComponent(path.basename(f))}`,
+                        path: `${uploadPathPrefix}/repos/${ghOwner}/${ghRepo}/releases/${data.id}/assets?name=${encodeURIComponent(path.basename(f))}`,
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/octet-stream',
