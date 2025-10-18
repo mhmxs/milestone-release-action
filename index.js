@@ -113,7 +113,7 @@ try {
                     const uploadPathPrefix = process.env.GITHUB_SERVER_URL.includes("github.com") ? "" : "/api/v1"
                     
                     let req = https.request({
-                        hostname: process.env.GITHUB_SERVER_URL.replace(/^https?:\/\//, ""),
+                        hostname: process.env.GITHUB_SERVER_URL.includes("github.com") ? "uploads.github.com" : process.env.GITHUB_SERVER_URL.replace(/^https?:\/\//, ""),
                         path: `${uploadPathPrefix}/repos/${ghOwner}/${ghRepo}/releases/${data.id}/assets?name=${encodeURIComponent(path.basename(f))}`,
                         method: 'POST',
                         headers: {
