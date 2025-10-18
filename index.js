@@ -47,7 +47,7 @@ try {
         octokit.rest.issues.updateMilestone({
             owner: ghOwner,
             repo: ghRepo,
-            milestone_number: milestone.id,
+            milestone_number: process.env.GITHUB_SERVER_URL.includes("github.com") ? milestone.number : milestone.id,
             state: 'closed'
         });
 
