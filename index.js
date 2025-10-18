@@ -72,7 +72,7 @@ try {
         const options = octokit.rest.issues.listForRepo.endpoint.merge({
             owner: ghOwner,
             repo: ghRepo,
-            milestone: milestone.id,
+            milestone: process.env.GITHUB_SERVER_URL.includes("github.com") ? milestone.number : milestone.id,
             state: 'closed'
         });
 
