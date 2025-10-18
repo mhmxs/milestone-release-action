@@ -118,7 +118,7 @@ try {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/octet-stream',
-                            'Authorization': `token ${process.env.ACTIONS_RUNTIME_TOKEN || process.env.GITHUB_TOKEN || process.env.GITEA_TOKEN}`,
+                            'Authorization': `token ${token}`,
                             'Content-Length': fileData.length,
                         },
                     }, (res) => {
