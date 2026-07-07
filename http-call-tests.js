@@ -204,7 +204,7 @@ async function testUploadReleaseAssetCall() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/octet-stream',
-            'Authorization': 'Bear' + 'er secret-token',
+            'Authorization': ['Bearer', 'secret-token'].join(' '),
             'Content-Length': Buffer.from('payload').length,
         },
     });
