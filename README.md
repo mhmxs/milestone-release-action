@@ -49,9 +49,9 @@ Action itself. Use this if you want to pass in your own Personal Access Token.
 
 ## Manual HTTP call tests
 
-The HTTP-bound action helpers are exported from `/home/runner/work/milestone-release-action/milestone-release-action/index.js`.
+The HTTP-bound action helpers are exported from `./index.js`.
 
-Manual test functions for each HTTP call are available in `/home/runner/work/milestone-release-action/milestone-release-action/http-call-tests.js`.
+Manual test functions for each HTTP call are available in `./http-call-tests.js`.
 You can run them all with:
 
 ```bash
