@@ -47,6 +47,19 @@ Action itself. Use this if you want to pass in your own Personal Access Token.
 
 **Optional** Comma-separated list of release assets to upload.
 
+## Manual HTTP call tests
+
+The HTTP-bound action helpers are exported from `/home/runner/work/milestone-release-action/milestone-release-action/index.js`.
+
+Manual test functions for each HTTP call are available in `/home/runner/work/milestone-release-action/milestone-release-action/http-call-tests.js`.
+You can run them all with:
+
+```bash
+node http-call-tests.js
+```
+
+Or call individual exported test functions from your IDE.
+
 ## Example usage
 
 ```yaml
