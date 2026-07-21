@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 try {
-    const token = process.env.GITHUB_TOKEN || process.env.GITEA_TOKEN || core.getInput('github-token');
+    const token = process.env.GITHUB_TOKEN || process.env.GITEA_TOKEN || process.env.GITACTION_TOKEN || core.getInput('github-token');
     const ghOwner = github.context.repo.owner;
     const ghRepo = github.context.repo.repo;
     const milestoneTitle = core.getInput('milestone-title');
